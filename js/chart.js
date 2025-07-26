@@ -47,4 +47,47 @@ function updateChart(symbol) {
         data.push({
             time,
             open,
-            high: Math.max(open
+            high: Math.max(open, close) + Math.random() * basePrice * 0.005,
+            low: Math.min(open, close) - Math.random() * basePrice * 0.005,
+            close
+        });
+        price = close;
+    }
+    
+    candleSeries.setData(data);
+    
+    // 模拟实时更新
+    if (window.updateInterval) clearInterval(window.updateInterval);
+    window.updateInterval = setInterval(() => {
+        const lastCandle = data[data.length - 1];
+        const newTime = lastCandle.time + 900;
+        const newClose = lastCandle.close + (Math.random() - 0.5) * basePrice * 0.002;
+        
+        const newCandle = {
+            time: newTime,
+            open: lastCandle.close,
+            high: Math.max(lastCandle.close, newClose) + Math.random() * basePrice * 0.001,
+            low: Math.min(lastCandle.close, newClose) - Math.random() * basePrice * 0.001,
+            close: newClose
+        };
+        
+        data.push(newCandle);
+        if (data.length > 200) data.shift();
+        
+        candleSeries.update(newCandle);
+    }, 15000);
+}
+
+// 时间周期切换
+document.querySelectorAll('.time-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // 实际应用中这里应该重新获取对应周期的K线数据
+        console.log(`切换到 ${this.dataset.tf} 周期`);
+    });
+});
+
+// 初始化图表
+initChart();
