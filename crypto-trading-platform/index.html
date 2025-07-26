@@ -1,1 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-page="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoExchange - 加密货币交易平台</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="img/logo.png" alt="CryptoExchange" height="30" class="d-inline-block align-top">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">首页</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="market.html">行情</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="trade.html">交易</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="wallet.html">钱包</a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <button id="theme-toggle" class="btn btn-sm btn-outline-light me-2">
+            <i class="bi bi-moon-fill"></i> 主题
+          </button>
+          <a href="#" class="btn btn-sm btn-outline-light">
+            <i class="bi bi-person"></i> 登录/注册
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
+  <!-- 主内容区 -->
+  <main class="container my-5">
+    <!-- 英雄区域 -->
+    <section class="hero-section text-center py-5 mb-5 rounded-3 bg-light">
+      <h1 class="display-4 fw-bold mb-4">安全便捷的加密货币交易平台</h1>
+      <p class="lead mb-5">无需注册即可体验 BTC、ETH 等主流数字货币交易</p>
+      <div class="d-flex justify-content-center">
+        <a href="trade.html" class="btn btn-primary btn-lg px-4 me-3">开始交易</a>
+        <a href="market.html" class="btn btn-outline-secondary btn-lg px-4">查看行情</a>
+      </div>
+    </section>
+
+    <!-- 特色功能 -->
+    <section class="feature-section mb-5">
+      <h2 class="text-center mb-4">为什么选择 CryptoExchange</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="bi bi-shield-lock fs-1 text-primary mb-3"></i>
+              <h3 class="h4">安全交易</h3>
+              <p class="mb-0">采用先进加密技术，保障您的资产安全</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="bi bi-lightning-charge fs-1 text-primary mb-3"></i>
+              <h3 class="h4">快速交易</h3>
+              <p class="mb-0">高速撮合引擎，确保交易即时完成</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="bi bi-currency-exchange fs-1 text-primary mb-3"></i>
+              <h3 class="h4">多种币种</h3>
+              <p class="mb-0">支持主流数字货币交易</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 热门币种 -->
+    <section class="market-section">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">热门币种</h2>
+        <a href="market.html" class="btn btn-sm btn-outline-primary">查看全部</a>
+      </div>
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th class="ps-4">币种</th>
+                  <th>价格(USDT)</th>
+                  <th>24h涨跌</th>
+                  <th>24h交易量</th>
+                  <th class="pe-4">操作</th>
+                </tr>
+              </thead>
+              <tbody id="top-coins-body">
+                <!-- 动态加载热门币种 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white py-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <h5>关于我们</h5>
+          <p class="mb-0">CryptoExchange 是一个模拟加密货币交易平台，仅供学习使用。</p>
+        </div>
+        <div class="col-md-4 mb-3">
+          <h5>快速链接</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white">首页</a></li>
+            <li><a href="market.html" class="text-white">行情</a></li>
+            <li><a href="trade.html" class="text-white">交易</a></li>
+            <li><a href="wallet.html" class="text-white">钱包</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-3">
+          <h5>联系我们</h5>
+          <p class="mb-1"><i class="bi bi-envelope me-2"></i> contact@cryptoexchange.demo</p>
+          <p class="mb-0"><i class="bi bi-github me-2"></i> github.com/cryptoexchange</p>
+        </div>
+      </div>
+      <hr class="my-3 bg-secondary">
+      <div class="text-center">
+        <p class="mb-0">© 2023 CryptoExchange. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 脚本引入 -->
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/websocket.js"></script>
+  <script src="js/app.js" type="module"></script>
+  <script src="js/pages/index.js" type="module"></script>
+</body>
+</html>
