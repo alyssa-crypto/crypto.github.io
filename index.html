@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加密货币交易所模拟系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- TradingView轻量版图表库 -->
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <div class="exchange-container">
+        <!-- 头部 -->
+        <header class="exchange-header">
+            <h1>💰 加密货币交易所模拟系统 (v1.0)</h1>
+            <div class="market-status">
+                <span class="online">● 实时连线</span>
+                <span id="update-time"></span>
+            </div>
+        </header>
 
+        <!-- 主体布局 -->
+        <div class="exchange-layout">
+            <!-- 左侧：市场行情 -->
+            <section class="market-panel">
+                <div class="panel-header">
+                    <h2>市场行情</h2>
+                    <input type="text" id="market-search" placeholder="搜索币种...">
+                </div>
+                <table id="market-table">
+                    <thead>
+                        <tr>
+                            <th>交易对</th>
+                            <th>最新价</th>
+                            <th>24h涨跌</th>
+                            <th>24h成交量</th>
+                        </tr>
+                    </thead>
+                    <tbody id="market-data">
+                        <!-- 动态加载 -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 中间：K线图 -->
+            <section class="chart-panel">
+                <div class="chart-controls">
+                    <div class="symbol-info">
+                        <span id="current-symbol">BTC/USDT</span>
+                        <span id="current-price" class="price-up">$62,345.78</span>
+                    </div>
+                    <div class="timeframe-selector">
+                        <button class="time-btn active" data-tf="15m">15分</button>
+                        <button class="time-btn" data-tf="1h">1小时</button>
+                        <button class="time-btn" data-tf="4h">4小时</button>
+                        <button class="time-btn" data-tf="1d">日线</button>
+                    </div>
+                </div>
+                <div id="kline-chart"></div>
+            </section>
+
+            <!-- 右侧：订单簿 -->
+            <section class="orderbook-panel">
+                <div class="orderbook-header">
+                    <h2>订单簿 <span id="ob-symbol">BTC/USDT</span></h2>
+                    <div class="depth-toggle">
+                        <span>深度: </span>
+                        <select id="depth-select">
+                            <option value="10">10档</option>
+                            <option value="20">20档</option>
+                            <option value="50">50档</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="orderbook-container">
+                    <table id="ask-table">
+                        <thead>
+                            <tr>
+                                <th>价格(USDT)</th>
+                                <th>数量(BTC)</th>
+                                <th>累计</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="price-divider">
+                        <span id="mid-price">$62,345.80</span>
+                    </div>
+                    <table id="bid-table">
+                        <thead>
+                            <tr>
+                                <th>价格(USDT)</th>
+                                <th>数量(BTC)</th>
+                                <th>累计</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/chart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
