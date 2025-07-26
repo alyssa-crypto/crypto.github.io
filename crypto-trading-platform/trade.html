@@ -1,1 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-page="trade">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交易 | CryptoExchange</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">CryptoExchange</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">首页</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="market.html">行情</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="trade.html">交易</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="wallet.html">钱包</a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <button id="theme-toggle" class="btn btn-sm btn-outline-light">
+            <i class="bi bi-moon-fill"></i> 主题
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
 
+  <!-- 交易主界面 -->
+  <div class="container-fluid mt-3">
+    <div class="row g-3">
+      <!-- 左侧交易对选择 -->
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">交易对</h5>
+          </div>
+          <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action active">
+              <img src="img/coins/btc.png" alt="BTC" width="20"> BTC/USDT
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <img src="img/coins/eth.png" alt="ETH" width="20"> ETH/USDT
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <img src="img/coins/bnb.png" alt="BNB" width="20"> BNB/USDT
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <img src="img/coins/xrp.png" alt="XRP" width="20"> XRP/USDT
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <img src="img/coins/sol.png" alt="SOL" width="20"> SOL/USDT
+            </a>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">市场深度</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-danger">卖单(USDT)</th>
+                    <th class="text-end">数量</th>
+                  </tr>
+                </thead>
+                <tbody id="asks-body">
+                  <!-- 动态加载卖单数据 -->
+                </tbody>
+              </table>
+            </div>
+            <div class="text-center py-2 bg-light">
+              <span id="current-price" class="fw-bold">$--.--</span>
+              <span id="price-change" class="ms-2 text-success">+0.00% ($0.00)</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-success">买单(USDT)</th>
+                    <th class="text-end">数量</th>
+                  </tr>
+                </thead>
+                <tbody id="bids-body">
+                  <!-- 动态加载买单数据 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 中间图表区域 -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">BTC/USDT</h5>
+            <div>
+              <select class="form-select form-select-sm" id="chart-interval">
+                <option value="1m">1分钟</option>
+                <option value="5m">5分钟</option>
+                <option value="15m" selected>15分钟</option>
+                <option value="1h">1小时</option>
+                <option value="4h">4小时</option>
+                <option value="1d">1天</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="p-3 border-bottom d-flex justify-content-between">
+              <div>
+                <h3 id="current-price-large">$--.--</h3>
+                <span id="price-change-large" class="text-success">+0.00% ($0.00)</span>
+              </div>
+              <div class="text-end">
+                <div class="text-muted small">24h最高</div>
+                <div id="24h-high" class="fw-bold">$--.--</div>
+              </div>
+              <div class="text-end">
+                <div class="text-muted small">24h最低</div>
+                <div id="24h-low" class="fw-bold">$--.--</div>
+              </div>
+              <div class="text-end">
+                <div class="text-muted small">24h成交量</div>
+                <div id="24h-volume" class="fw-bold">--</div>
+              </div>
+            </div>
+            <div class="p-3">
+              <canvas id="priceChart" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-header bg-light">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">最新成交</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">我的成交</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <th>时间</th>
+                    <th class="text-end">价格(USDT)</th>
+                    <th class="text-end">数量(BTC)</th>
+                    <th class="text-end">总额(USDT)</th>
+                  </tr>
+                </thead>
+                <tbody id="trades-body">
+                  <!-- 动态加载成交数据 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧交易面板 -->
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header bg-light">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">限价</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">市价</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-body">
+            <form id="buyForm">
+              <div class="mb-3">
+                <label class="form-label">买入价 (USDT)</label>
+                <input type="number" class="form-control" id="buy-price" step="0.01" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">数量 (BTC)</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="buy-amount" step="0.0001" required>
+                  <button type="button" class="btn btn-outline-secondary" data-percent="0.25">25%</button>
+                  <button type="button" class="btn btn-outline-secondary" data-percent="0.5">50%</button>
+                  <button type="button" class="btn btn-outline-secondary" data-percent="1">100%</button>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">总额 (USDT)</label>
+                <input type="number" class="form-control" id="buy-total" readonly>
+              </div>
+              <button type="submit" class="btn btn-success w-100">买入 BTC</button>
+            </form>
+
+            <hr>
+
+            <form id="sellForm">
+              <div class="mb-3">
+                <label class="form-label">卖出价 (USDT)</label>
+                <input type="number" class="form-control" id="sell-price" step="0.01" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">数量 (BTC)</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="sell-amount" step="0.0001" required>
+                  <button type="button" class="btn btn-outline-secondary" data-percent="0.25">25%</button>
+                  <button type="button" class="btn btn-outline-secondary" data-percent="0.5">50%</button>
+                  <button type="button" class="btn btn-outline-secondary" data-percent="1">100%</button>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">总额 (USDT)</label>
+                <input type="number" class="form-control" id="sell-total" readonly>
+              </div>
+              <button type="submit" class="btn btn-danger w-100">卖出 BTC</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">资产</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <th>币种</th>
+                    <th class="text-end">可用</th>
+                    <th class="text-end">冻结</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <img src="img/coins/usdt.png" alt="USDT" width="20">
+                      USDT
+                    </td>
+                    <td class="text-end">5,000.00</td>
+                    <td class="text-end">0.00</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="img/coins/btc.png" alt="BTC" width="20">
+                      BTC
+                    </td>
+                    <td class="text-end">0.1234</td>
+                    <td class="text-end">0.0000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="img/coins/eth.png" alt="ETH" width="20">
+                      ETH
+                    </td>
+                    <td class="text-end">1.2345</td>
+                    <td class="text-end">0.0000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 脚本引入 -->
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/bootstrap.bundle.min.js"></script>
+  <script src="js/lib/chart.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/websocket.js"></script>
+  <script src="js/core/chart.js"></script>
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>
