@@ -1,122 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>艾丽莎加密 - 专业加密货币分析平台</title>
-    <meta name="description" content="实时行情、技术分析与行业资讯">
-    <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/widgets.css">
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="https://widgets.coingecko.com/coingecko-coin-ticker-widget.js" as="script">
+    <title>艾丽莎加密</title>
+    <style>
+        body { font-family: Arial; text-align: center; }
+        h1 { color: #4a2c82; }
+    </style>
 </head>
 <body>
-    <!-- 动态加载的导航栏 -->
-    <header id="main-header"></header>
-
-    <main class="container">
-        <section class="hero">
-            <h1>掌握加密货币市场脉搏</h1>
-            <button class="cta-btn" id="data-btn">获取实时数据</button>
-        </section>
-
-        <!-- 行情组件容器 -->
-        <div class="widgets-container" id="crypto-widgets"></div>
-    </main>
-
-    <!-- 动态加载的页脚 -->
-    <footer id="main-footer"></footer>
-
-    <!-- JS -->
-    <script src="assets/js/main.js" defer></script>
-    <!-- 生产环境统计代码 -->
-    <div id="analytics-container"></div>
+    <h1>加密货币行情站</h1>
+    <!-- CoinGecko 组件 -->
+    <script src="https://widgets.coingecko.com/coingecko-coin-ticker-widget.js"></script>
+    <coingecko-coin-ticker-widget coin-id="bitcoin" currency="usd" locale="zh"></coingecko-coin-ticker-widget>
 </body>
-</html>/* 基础设置 */
-:root {
-    --primary-color: #4a2c82;
-    --secondary-color: #6a3cb5;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    line-height: 1.6;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-/* 导航栏样式 */
-#main-header {
-    background: var(--primary-color);
-    padding: 1rem;
-    color: white;
-}
-
-/* 按钮样式 */
-.cta-btn {
-    background: var(--secondary-color);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-}// 动态加载模块
-document.addEventListener('DOMContentLoaded', () => {
-    // 加载导航和页脚
-    loadModule('modules/header.html', 'main-header');
-    loadModule('modules/footer.html', 'main-footer');
-    
-    // 加载行情组件
-    loadModule('modules/crypto-widgets.html', 'crypto-widgets');
-
-    // 生产环境加载统计代码
-    if (!window.location.href.includes('localhost')) {
-        loadModule('modules/analytics.html', 'analytics-container');
-    }
-
-    // 按钮交互
-    document.getElementById('data-btn').addEventListener('click', () => {
-        alert('实时数据功能即将开放！');
-    });
-});
-
-function loadModule(path, targetId) {
-    fetch(path)
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById(targetId).innerHTML = html;
-            if (path.includes('crypto-widgets')) initWidgets();
-        });
-}
-
-function initWidgets() {
-    // 初始化TradingView
-    new TradingView.widget({
-        "autosize": true,
-        "symbol": "BINANCE:BTCUSDT",
-        "interval": "D",
-        "timezone": "Asia/Shanghai",
-        "theme": "light",
-        "locale": "zh_CN",
-        "container_id": "tradingview_chart"
-    });
-}<div class="widget-grid">
-    <!-- CoinGecko 价格组件 -->
-    <div class="price-widget">
-        <script src="https://widgets.coingecko.com/coingecko-coin-ticker-widget.js"></script>
-        <coingecko-coin-ticker-widget coin-id="bitcoin" currency="usd" locale="zh"></coingecko-coin-ticker-widget>
-    </div>
-
-    <!-- TradingView 图表 -->
-    <div class="chart-widget">
-        <div id="tradingview_chart"></div>
-        <script src="https://s3.tradingview.com/tv.js"></script>
-    </div>
-</div>
+</html>
