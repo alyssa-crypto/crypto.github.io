@@ -3,167 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>专业加密货币交易所模拟系统</title>
-    <!-- 主题切换 -->
-    <link id="theme-style" rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/themes/dark.css">
-    <!-- 图表库 -->
+    <title>CryptoST - 加密货币行情分析</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 引入 TradingView Lightweight Charts -->
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="exchange-container">
-        <!-- 头部控制栏 -->
-        <header class="exchange-header">
-            <div class="header-left">
-                <h1>⚡ CryptoExchange Pro</h1>
-                <div class="market-status">
-                    <span class="status-indicator online"></span>
-                    <span id="connection-status">已连接</span>
-                    <span id="server-time" class="time-display"></span>
-                </div>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fab fa-bitcoin"></i>
+            <span>CryptoST</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active"><i class="fas fa-chart-line"></i> 行情</a>
+            <a href="#"><i class="fas fa-newspaper"></i> 资讯</a>
+            <a href="#"><i class="fas fa-star"></i> 自选</a>
+        </div>
+        <div class="nav-actions">
+            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+        </div>
+    </nav>
+
+    <!-- 行情概览 -->
+    <section class="market-overview">
+        <div class="ticker-container">
+            <div class="ticker-item btc">
+                <span class="symbol">BTC/USDT</span>
+                <span class="price">$62,345.78</span>
+                <span class="change up">+2.34%</span>
             </div>
-            <div class="header-right">
-                <div class="symbol-selector">
-                    <select id="main-symbol">
-                        <option value="BTC/USDT">BTC/USDT</option>
-                        <option value="ETH/USDT">ETH/USDT</option>
-                        <option value="SOL/USDT">SOL/USDT</option>
+            <!-- 其他币种... -->
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <main class="container">
+        <!-- 行情表格 -->
+        <section class="market-table-section">
+            <div class="section-header">
+                <h2><i class="fas fa-table"></i> 加密货币行情</h2>
+                <div class="table-controls">
+                    <input type="text" id="search-coins" placeholder="搜索币种...">
+                    <select id="market-filter">
+                        <option value="all">全部</option>
+                        <option value="favorites">自选</option>
                     </select>
                 </div>
-                <button id="theme-toggle" class="icon-btn" title="切换主题">🌓</button>
             </div>
-        </header>
-
-        <!-- 主体网格布局 -->
-        <div class="exchange-grid">
-            <!-- 左侧：市场行情 -->
-            <section class="market-panel panel">
-                <div class="panel-header">
-                    <h2>📊 市场行情</h2>
-                    <input type="text" id="market-search" placeholder="搜索交易对...">
-                </div>
-                <div class="table-container">
-                    <table id="market-table">
-                        <thead>
-                            <tr>
-                                <th data-sort="symbol">交易对</th>
-                                <th data-sort="price">最新价</th>
-                                <th data-sort="change">24h涨跌</th>
-                                <th data-sort="volume">成交量</th>
-                            </tr>
-                        </thead>
-                        <tbody id="market-data"></tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- 中间：K线图 -->
-            <section class="chart-panel panel">
-                <div class="chart-header">
-                    <div class="symbol-display">
-                        <span id="current-symbol">BTC/USDT</span>
-                        <span id="current-price" class="price-up">$--,--</span>
-                        <span id="price-change" class="change-up">+--%</span>
-                    </div>
-                    <div class="chart-controls">
-                        <div class="timeframe-selector">
-                            <button data-tf="1m" class="time-btn">1分</button>
-                            <button data-tf="5m" class="time-btn">5分</button>
-                            <button data-tf="15m" class="time-btn active">15分</button>
-                            <button data-tf="1h" class="time-btn">1小时</button>
-                            <button data-tf="4h" class="time-btn">4小时</button>
-                            <button data-tf="1d" class="time-btn">日线</button>
-                        </div>
-                        <div class="indicator-selector">
-                            <select id="indicator-select">
-                                <option value="">无指标</option>
-                                <option value="ma">MA均线</option>
-                                <option value="ema">EMA指数均线</option>
-                                <option value="macd">MACD</option>
-                                <option value="rsi">RSI</option>
-                                <option value="boll">布林带</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div id="kline-chart"></div>
-                <div class="chart-footer">
-                    <div class="price-scale-control">
-                        <button id="log-scale-btn" class="scale-btn">对数坐标</button>
-                        <button id="auto-scale-btn" class="scale-btn">自动缩放</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 右侧：订单簿和交易 -->
-            <div class="right-panel">
-                <!-- 订单簿 -->
-                <section class="orderbook-panel panel">
-                    <div class="panel-header">
-                        <h2>📖 订单簿 <span id="ob-symbol">BTC/USDT</span></h2>
-                        <div class="depth-control">
-                            <span>深度: </span>
-                            <select id="depth-select">
-                                <option value="10">10档</option>
-                                <option value="20">20档</option>
-                                <option value="50" selected>50档</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="orderbook-container">
-                        <table id="ask-table" class="orderbook-side">
-                            <thead>
-                                <tr>
-                                    <th>价格(USDT)</th>
-                                    <th>数量</th>
-                                    <th>累计</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <div class="orderbook-divider">
-                            <span id="mid-price">$--,--</span>
-                            <span id="spread">点差: --</span>
-                        </div>
-                        <table id="bid-table" class="orderbook-side">
-                            <thead>
-                                <tr>
-                                    <th>价格(USDT)</th>
-                                    <th>数量</th>
-                                    <th>累计</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- 实时成交 -->
-                <section class="trades-panel panel">
-                    <div class="panel-header">
-                        <h2>🔔 实时成交</h2>
-                        <div class="trade-filter">
-                            <span>显示: </span>
-                            <select id="trade-filter">
-                                <option value="all">全部</option>
-                                <option value="buy">仅买入</option>
-                                <option value="sell">仅卖出</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="trade-feed" class="trade-feed"></div>
-                </section>
+            <div class="table-wrapper">
+                <table id="market-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="rank">#</th>
+                            <th data-sort="name">名称</th>
+                            <th data-sort="price">价格</th>
+                            <th data-sort="change">24h涨跌</th>
+                            <th data-sort="volume">24h成交量</th>
+                            <th data-sort="marketcap">市值</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="market-data">
+                        <!-- 动态加载 -->
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- JavaScript 文件 -->
-    <script src="js/config.js"></script>
-    <script src="js/core/orderbook.js"></script>
-    <script src="js/core/trade.js"></script>
-    <script src="js/core/chart.js"></script>
-    <script src="js/ui/market.js"></script>
-    <script src="js/ui/panels.js"></script>
+        <!-- 图表区 -->
+        <section class="chart-section">
+            <div class="chart-header">
+                <div class="symbol-info">
+                    <span id="chart-symbol">BTC/USDT</span>
+                    <span id="chart-price" class="price-up">$62,345.78</span>
+                    <span id="chart-change" class="change-up">+2.34%</span>
+                </div>
+                <div class="timeframe-tabs">
+                    <button data-tf="15m" class="active">15分钟</button>
+                    <button data-tf="1h">1小时</button>
+                    <button data-tf="4h">4小时</button>
+                    <button data-tf="1d">日线</button>
+                    <button data-tf="1w">周线</button>
+                </div>
+            </div>
+            <div id="trading-chart"></div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>© 2023 CryptoST - 加密货币行情分析平台</p>
+        <p>数据更新时间: <span id="update-time"></span></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/data.js"></script>
+    <script src="js/market.js"></script>
+    <script src="js/charts.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
